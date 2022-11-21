@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SplatApp</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_dashboard">Crear</string>
+    <string name="title_notifications">Ajustes Notif.</string>
+    <string name="channel_name">SplatApp</string>
+    <string name="channel_description">Prueba</string>
+    <string name="prefs_file">com.axeldreemurr.splatapp.PREFERENCE_FILE_KEY</string>
+</resources>
