@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.axeldreemurr.splatapp.GearFetchingActivity
 import com.axeldreemurr.splatapp.databinding.FragmentNotificationsBinding
 import com.axeldreemurr.splatapp.ui.pokelist.PokeListActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlin.system.exitProcess
 
 class NotificationsFragment : Fragment() {
 
@@ -35,6 +39,11 @@ class NotificationsFragment : Fragment() {
         binding.btnPokeapi.setOnClickListener{
             val intent = Intent (activity, PokeListActivity::class.java)
             activity?.startActivity(intent)
+        }
+
+        binding.btnLogout.setOnClickListener {
+            Firebase.auth.signOut()
+            System.exit(0)
         }
 
         return root

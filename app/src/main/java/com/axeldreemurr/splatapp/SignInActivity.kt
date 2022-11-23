@@ -1,6 +1,5 @@
 package com.axeldreemurr.splatapp
 
-import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,19 +12,23 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.axeldreemurr.splatapp.databinding.ActivitySignInBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.OAuthProvider
+
 
 class SignInActivity : AppCompatActivity() {
 
@@ -36,11 +39,15 @@ class SignInActivity : AppCompatActivity() {
     lateinit var notificationManager: NotificationManager
     lateinit var notificationChannel: NotificationChannel
     lateinit var builder: Notification.Builder
+    lateinit var mAdView : AdView
     private val channelId = "com.axeldreemurr.splatapp.notifications"
     private val description = "Avisos de inicio de sesión"
     private val textTitle = "Bienvenido"
     private val textContent = "¡Felicidades, has iniciado sesión con éxito!"
     private val GOOGLE_SIGN_IN=100
+
+    var provider = OAuthProvider.newBuilder("github.com")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +65,47 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        binding.githubLoginBtn.setOnClickListener {
+            val pendingResultTask = firebaseAuth.pendingAuthResult
+            if (pendingResultTask != null) {
+                // There's something already here! Finish the sign-in for your user.
+                pendingResultTask
+                    .addOnSuccessListener(
+                        OnSuccessListener {
+                            val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                            // User is signed in.
+                            // IdP data available in
+                            // authResult.getAdditionalUserInfo().getProfile().
+                            // The OAuth access token can also be retrieved:
+                            // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                        })
+                    .addOnFailureListener {
+                        // Handle failure.
+                    }
+            } else {
+                firebaseAuth
+                    .startActivityForSignInWithProvider( /* activity= */this, provider.build())
+                    .addOnSuccessListener {
+                        val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        // User is signed in.
+                        // IdP data available in
+                        // authResult.getAdditionalUserInfo().getProfile().
+                        // The OAuth access token can also be retrieved:
+                        // ((OAuthCredential)authResult.getCredential()).getAccessToken().
+                    }
+                    .addOnFailureListener {
+                        // Handle failure.
+                    }
+            }
+        }
 
 
         binding.login.setOnClickListener {
@@ -109,6 +157,7 @@ class SignInActivity : AppCompatActivity() {
 
         }
     }
+
 
     private fun setup(){
         val btn_google : Button = findViewById(R.id.sign_in_button)
