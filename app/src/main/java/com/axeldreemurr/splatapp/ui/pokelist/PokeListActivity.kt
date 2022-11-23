@@ -3,6 +3,7 @@ package com.axeldreemurr.splatapp.ui.pokelist
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ class PokeListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokelist)
+        Toast.makeText(this, "¡Conectado a PokéApi!", Toast.LENGTH_LONG).show()
+
 
         viewModel = ViewModelProvider(this).get(PokeListViewModel::class.java)
 

@@ -79,7 +79,9 @@ class SignInActivity : AppCompatActivity() {
                     .addOnSuccessListener(
                         OnSuccessListener {
                             val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                            Toast.makeText(this, "¡Accediste con GitHub!", Toast.LENGTH_LONG).show()
                             startActivity(intent)
+
                             // User is signed in.
                             // IdP data available in
                             // authResult.getAdditionalUserInfo().getProfile().
@@ -94,6 +96,7 @@ class SignInActivity : AppCompatActivity() {
                     .startActivityForSignInWithProvider( /* activity= */this, provider.build())
                     .addOnSuccessListener {
                         val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                        Toast.makeText(this, "¡Accediste con GitHub!", Toast.LENGTH_LONG).show()
                         startActivity(intent)
                         // User is signed in.
                         // IdP data available in
@@ -116,6 +119,7 @@ class SignInActivity : AppCompatActivity() {
                     firebaseAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
                         if (it.isSuccessful) {
                             val intent = Intent(this@SignInActivity, HomeActivity::class.java)
+                            Toast.makeText(this, "¡Accediste con éxito!", Toast.LENGTH_LONG).show()
                             startActivity(intent)
 
                             val intent2 = Intent(this, HomeActivity::class.java)
@@ -177,6 +181,7 @@ class SignInActivity : AppCompatActivity() {
             putExtra("email", email)
             putExtra("provider", provider.name)
         }
+        Toast.makeText(this, "¡Accediste con Google!", Toast.LENGTH_LONG).show()
         startActivity(intent)
     }
 

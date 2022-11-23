@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.pokelist.PokeListActivity">
+    tools:context=".ui.pokelist.PokeListActivity"
+    android:background="@drawable/_52132660">
 
 
     <androidx.recyclerview.widget.RecyclerView

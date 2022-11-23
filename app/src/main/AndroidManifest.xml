@@ -99,9 +99,9 @@
         <activity
             android:name=".ui.pokelist.PokeListActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:label="Splatoon x Pokémon: Pokédex Lite">
         </activity>
-        <activity android:name=".ui.pokeinfo.PokeInfoActivity" />
+        <activity android:name=".ui.pokeinfo.PokeInfoActivity" android:label="Detalles del Pokémon"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>
