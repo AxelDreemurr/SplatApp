@@ -150,7 +150,7 @@ class SignInActivity : AppCompatActivity() {
 
 
                         } else {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Credenciales incorrectas.", Toast.LENGTH_SHORT).show()
 
                         }
                     }
